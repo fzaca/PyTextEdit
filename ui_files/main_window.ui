@@ -55,9 +55,23 @@
     <addaction name="action_italic"/>
     <addaction name="action_underline"/>
    </widget>
+   <widget class="QMenu" name="menu_view">
+    <property name="tearOffEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>View</string>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>false</bool>
+    </property>
+    <addaction name="action_zoom_out"/>
+    <addaction name="action_zoom_in"/>
+   </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_edit"/>
    <addaction name="menu_format"/>
+   <addaction name="menu_view"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -157,6 +171,25 @@
   <action name="action_underline">
    <property name="text">
     <string>Underline</string>
+   </property>
+  </action>
+  <action name="action_zoom_out">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="action_zoom_in">
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>
