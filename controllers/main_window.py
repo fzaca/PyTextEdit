@@ -19,12 +19,15 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
         self.file_text = ''
         self.unsaved_changes = True
 
+        # Habilidar rehacer y deshacer
+        self.text_edit.document().setUndoRedoEnabled(True)
+
         # Load config
         self.config = load_config()
         self.update_font({
-            'size' : self.config['font-size'],
-            'family' : self.config['font-family'],
-            # 'color' : self.config['font-color'],
+            'size' : self.config.get('font-size'),
+            'family' : self.config.get('font-family'),
+            # 'color' : self.config.get('font-color'),
         })
 
         self.update_status_bar()
@@ -32,7 +35,6 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
         # Connects signals
         self.connect_signals()
 
-    
     def connect_signals(self):
         self.text_edit.textChanged.connect(self.on_text_changed)
         self.action_zoom_in.triggered.connect(self.zoom_in_clicked)
@@ -42,6 +44,11 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
         self.action_save.triggered.connect(self.save_clicked)
         self.action_save_as.triggered.connect(self.save_as_clicked)
         self.action_close.triggered.connect(self.close)
+        self.action_copy.triggered.connect(self.text_edit.copy)
+        self.action_cut.triggered.connect(self.text_edit.cut)
+        self.action_paste.triggered.connect(self.text_edit.paste)
+        self.action_undo.triggered.connect(self.text_edit.undo)
+        self.action_redo.triggered.connect(self.text_edit.redo)
 
     def zoom_in_clicked(self):
         self.config['font-size'] += 1
@@ -49,7 +56,7 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
         self.menu_view.setVisible(True)
 
     def zoom_out_clicked(self):
-        if self.config['font-size'] > 1:
+        if self.config.get('font-size') > 1:
             self.config['font-size'] -= 1
             self.update_font({'size' : self.config['font-size']})
             self.menu_view.setVisible(True)
@@ -64,20 +71,23 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
     def new_clicked(self):
         self.file_text = ''
         self.file_path = ''
-        self.text_edit.setText(self.file_text)
+        self.text_edit.clear()
 
     def open_clicked(self):
         file_path = self.open_file_dialog()
         if file_path: 
             self.file_path = file_path
             self.file_text = read_file(file_path)
+            self.text_edit.clear()
             self.text_edit.setText(self.file_text)
+            self.update_status_bar()
         
     def save_clicked(self):
         if self.file_path:
             self.file_text = self.text_edit.toPlainText()
             write_file(self.file_path, self.file_text)
             self.unsaved_changes = False
+            self.update_status_bar()
         else:
             self.save_as_clicked()
 
@@ -88,6 +98,7 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
             write_file(file_path, self.file_text)
             self.file_path = file_path
             self.unsaved_changes = False
+            self.update_status_bar()
 
     def open_file_dialog(self):
         home_path = expanduser('~')
@@ -117,7 +128,9 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
         file = self.file_path.split('/')[-1] if self.file_path else 'Unnamed'
         saved = 'No' if self.unsaved_changes else 'Yes'
         message = template.format(file, saved)
-        self.status_bar.showMessage(message, 600000)
+        self.status_bar.showMessage(message)
+        title = file + '*' if self.unsaved_changes else file
+        self.setWindowTitle(title)
 
     def closeEvent(self, event): # Metodo por defecto
         # Guardar configuración antes de cerrar la aplicación

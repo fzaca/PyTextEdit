@@ -35,6 +35,7 @@
     </property>
     <addaction name="action_new"/>
     <addaction name="action_open"/>
+    <addaction name="separator"/>
     <addaction name="action_save"/>
     <addaction name="action_save_as"/>
     <addaction name="action_close"/>
@@ -49,14 +50,6 @@
     <addaction name="action_undo"/>
     <addaction name="action_redo"/>
    </widget>
-   <widget class="QMenu" name="menu_format">
-    <property name="title">
-     <string>Format</string>
-    </property>
-    <addaction name="action_bold"/>
-    <addaction name="action_italic"/>
-    <addaction name="action_underline"/>
-   </widget>
    <widget class="QMenu" name="menu_view">
     <property name="tearOffEnabled">
      <bool>false</bool>
@@ -70,10 +63,16 @@
     <addaction name="action_zoom_out"/>
     <addaction name="action_zoom_in"/>
    </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_edit"/>
-   <addaction name="menu_format"/>
    <addaction name="menu_view"/>
+   <addaction name="menu_help"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -104,10 +103,6 @@
    <addaction name="separator"/>
    <addaction name="action_undo"/>
    <addaction name="action_redo"/>
-   <addaction name="separator"/>
-   <addaction name="action_bold"/>
-   <addaction name="action_italic"/>
-   <addaction name="action_underline"/>
   </widget>
   <widget class="QStatusBar" name="status_bar">
    <property name="enabled">
@@ -207,6 +202,11 @@
   <action name="action_close">
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
