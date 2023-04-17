@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Text Editor</string>
+   <string>PyTextEdit</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -36,6 +36,8 @@
     <addaction name="action_new"/>
     <addaction name="action_open"/>
     <addaction name="action_save"/>
+    <addaction name="action_save_as"/>
+    <addaction name="action_close"/>
    </widget>
    <widget class="QMenu" name="menu_edit">
     <property name="title">
@@ -107,9 +109,14 @@
    <addaction name="action_italic"/>
    <addaction name="action_underline"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar">
+  <widget class="QStatusBar" name="status_bar">
    <property name="enabled">
     <bool>true</bool>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -190,6 +197,16 @@
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="action_save_as">
+   <property name="text">
+    <string>Save As</string>
+   </property>
+  </action>
+  <action name="action_close">
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>
