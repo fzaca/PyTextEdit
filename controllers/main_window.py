@@ -1,12 +1,13 @@
 from os.path import expanduser
 
 from PySide6.QtGui import QFont, QColor
-from PySide6.QtWidgets import QMainWindow, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QFileDialog, QDialog
 
 from views.main_window_ui import Ui_MainWindow
 from utils.config_utils import load_config, save_config
 from utils.font_utils import update_font
 from utils.file_utils import read_file, write_file
+from controllers.unsaved_changes_dialog import UnsavedChangesDialogForm
 
 class MainWindowForm(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -137,5 +138,18 @@ class MainWindowForm(QMainWindow, Ui_MainWindow):
         save_config(self.config)
 
         # Agregar verificacion de cambios
+        if self.unsaved_changes:
+            dialog = UnsavedChangesDialogForm()
+            result = dialog.exec()
+            if result == dialog.Canceled: # No funciona
+                event.ignore()
+            elif result == dialog.Saved:
+                self.save_clicked()
+                event.accept()
+            elif result == dialog.Discarded:
+                event.accept()
+            else: event.accept()
+        else:
+            event.accept()
 
         super().closeEvent(event)
