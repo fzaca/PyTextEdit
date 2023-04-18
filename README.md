@@ -1,5 +1,7 @@
 # PyTextEdit - Simple Text Editor📘
 
+_Este es un editor de notas básico hecho en Python con PySide6. Puede abrir, cerrar y crear notas nuevas, y también cuenta con herramientas de edición como copiar, cortar, pegar, deshacer y rehacer._
+
 <p align="center"><img src='https://raw.githubusercontent.com/Xukay101/PyTextEdit/master/demo.gif' /></p>
 
 ## Instrucciones 🔧
